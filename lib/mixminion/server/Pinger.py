@@ -46,10 +46,13 @@ from mixminion.Common import MixError, AtomicFile, ceilDiv, createPrivateDir, \
      parseFnameDate, previousMidnight, readPickled, secureDelete, \
      succeedingMidnight, UIError, writePickled
 
+# sqlite3 is embedded in Python >= v2.5.  If it's successfully imported, the
+# sqlite3_imported scalar is set True and Pinging can be performed.
 try:
     import sqlite3
+    sqlite3_imported = True
 except ImportError:
-    sqlite = None
+    sqlite3_imported = False
 
 # How often should the server store the fact that it is still alive (seconds).
 HEARTBEAT_INTERVAL = 30*60
@@ -1504,9 +1507,9 @@ def getPingGenerator(config):
     return CompoundPingGenerator(pingers)
 
 def canRunPinger():
-    """Return true iff we have the required libraries installed to run a pinger.
+    """Return true if we have the required libraries installed to run a pinger.
     """
-    return sys.version_info[:2] >= (2,2) and sqlite is not None
+    return sys.version_info[:2] >= (2,2) and sqlite3_imported
 
 # Map from database type name to databae implementation class.
 DATABASE_CLASSES = { 'sqlite' : SQLiteDatabase }
