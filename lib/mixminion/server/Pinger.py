@@ -1506,7 +1506,7 @@ def getPingGenerator(config):
 def canRunPinger():
     """Return true iff we have the required libraries installed to run a pinger.
     """
-    return sys.version_info[:2] >= (2,2) and sqlite3 is not None
+    return sys.version_info[:2] >= (2,2) and sqlite is not None
 
 # Map from database type name to databae implementation class.
 DATABASE_CLASSES = { 'sqlite' : SQLiteDatabase }
