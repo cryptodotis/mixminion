@@ -1463,7 +1463,7 @@ def sendSMTPMessage(cfgSection, toList, fromAddr, message):
     # FFFF messages in a row.
     if cfgSection['SendmailCommand'] is not None:
         cmd, opts = cfgSection['SendmailCommand']
-        command = cmd + (" ".join(opts))
+        command = cmd + " " + (" ".join(opts))
         f = os.popen(command, 'w')
         f.write(message)
         f.close()
